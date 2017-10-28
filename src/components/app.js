@@ -6,7 +6,7 @@ angular.module('video-player')
   //   video: '<' // one direction, downstream
   // },
   
-  controller: function() {
+  controller: function(youTube) {
     console.log('app');
     console.log(this);
     this.videos = window.exampleVideoData;
@@ -15,6 +15,15 @@ angular.module('video-player')
     this.selectVideo = (index) => {
       // console.log(this)
       this.currentVideo = this.videos[index];
+    };
+    
+    this.handleClick = (query) => {
+      // console.log('hi')
+      this.videos = youTube.search(query, (function(responseData) {
+        this.videos = responseData;
+        this.currentVideo = this.videos[0];
+      }).bind(this)); // video data
+      console.log('returned: ' + this.videos);
     };
     //console.log(this.currentVideo);
   },
